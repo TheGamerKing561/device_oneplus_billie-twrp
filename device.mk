@@ -43,6 +43,11 @@ PRODUCT_PACKAGES += \
     bootctrl.lito \
     bootctrl.lito.recovery \
 
+# qcom decryption
+PRODUCT_PACKAGES += \
+    qcom_decrypt \
+    qcom_decrypt_fbe
+
 PRODUCT_HOST_PACKAGES += \
     libandroidicu
 

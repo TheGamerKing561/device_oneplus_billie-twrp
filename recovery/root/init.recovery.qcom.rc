@@ -25,8 +25,6 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-import /init.recovery.qcom_decrypt.rc
-
 on fs
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
@@ -36,27 +34,9 @@ on fs
     symlink /dev/block/bootdevice/by-name/mdm_oem_stanvbk /dev/block/bootdevice/by-name/mdm_oem_stanvbk_b
     symlink /dev/block/bootdevice/by-name/spunvm /dev/block/bootdevice/by-name/spunvm_a
     symlink /dev/block/bootdevice/by-name/spunvm /dev/block/bootdevice/by-name/spunvm_b
-    chmod 0660 /dev/qseecom
-    chown system drmrpc /dev/qseecom
-    chmod 0664 /dev/ion
-    chown system system /dev/ion
-    install_keyring
 
 on early-fs
     start vold
-
-service sbinqseecomd /sbin/qseecomd
-    user root
-    group root
-    disabled
-    seclabel u:r:recovery:s0
-
-service prepdecrypt /sbin/prepdecrypt.sh
-    oneshot
-    disabled
-    user root
-    group root
-    seclabel u:r:recovery:s0
 
 service hwservicemanager /system/bin/hwservicemanager
     user root
@@ -65,7 +45,7 @@ service hwservicemanager /system/bin/hwservicemanager
     onrestart setprop hwservicemanager.ready false
     seclabel u:r:recovery:s0
 
-service boot-1-0 /sbin/android.hardware.boot@1.0-service
+service boot-1-0 /system/bin/android.hardware.boot@1.0-service
     user root
     group root
     disabled
@@ -91,31 +71,19 @@ service keystore /system/bin/keystore /tmp/misc/keystore
     disabled
     seclabel u:r:recovery:s0
 
-service gatekeeper-1-0 /sbin/android.hardware.gatekeeper@1.0-service-qti
-    user root
-    group root
-    disabled
-    seclabel u:r:recovery:s0
-
-service keymaster-4-0 /sbin/android.hardware.keymaster@4.0-service-qti
-    user root
-    group root
-    disabled
-    seclabel u:r:recovery:s0
-
 service logd /system/bin/logd
     user root
     group root
     disabled
     seclabel u:r:recovery:s0
 
-service time_daemon /sbin/time_daemon
+service time_daemon /system/bin/time_daemon
     user root
     group root
     disabled
     seclabel u:r:recovery:s0
 
-service patchfakepartitions-service /sbin/patchfakepartitions-service.sh
+service patchfakepartitions-service /system/bin/patchfakepartitions-service.sh
     user root
     group root
     disabled
@@ -142,21 +110,6 @@ on init
     start prepdecrypt
     start time_daemon
     setprop crypto.ready 1
-
-on property:crypto.ready=0
-    stop sbinqseecomd
-    stop keymaster-4-0
-    stop gatekeeper-1-0
-    stop servicemanager
-
-on property:crypto.ready=1
-    start sbinqseecomd
-
-on property:vendor.sys.listeners.registered=true
-    start keymaster-4-0
-    start gatekeeper-1-0
-    start servicemanager
-    restart time_daemon
 
 on property:sys.usb.config=mtp,adb
     restart time_daemon
