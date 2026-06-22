@@ -48,6 +48,9 @@ PRODUCT_PACKAGES += \
     qcom_decrypt \
     qcom_decrypt_fbe
 
+PRODUCT_PACKAGES += \
+    android.system.keystore2
+
 PRODUCT_HOST_PACKAGES += \
     libandroidicu
 
