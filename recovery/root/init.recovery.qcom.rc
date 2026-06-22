@@ -110,6 +110,7 @@ on init
     start prepdecrypt
     start time_daemon
     setprop crypto.ready 1
+    setprop prepdecrypt.loglevel 2
 
 on property:sys.usb.config=mtp,adb
     restart time_daemon
