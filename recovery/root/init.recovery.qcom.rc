@@ -107,7 +107,6 @@ on init
     start logd
     start hwservicemanager
     start boot-1-0
-    start prepdecrypt
     start time_daemon
     setprop crypto.ready 1
     setprop prepdecrypt.loglevel 2
