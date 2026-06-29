@@ -4,7 +4,7 @@
 /system_image   emmc  /dev/block/by-name/system                flags=display="System Image";backup=0;flashimg
 /vendor_image   emmc  /dev/block/by-name/vendor                flags=display="Vendor Image";backup=0;flashimg
 
-/data       f2fs	/dev/block/bootdevice/by-name/userdata          flags=fileencryption=aes-256-xts:aes-256-cts:v2+inlinecrypt_optimized+wrappedkey_v0,metadata_encryption=aes-256-xts:wrappedkey_v0,keydirectory=/metadata/vold/metadata_encryption,inlinecrypt
+/data       f2fs	/dev/block/bootdevice/by-name/userdata          flags=metadata_encryption=aes-256-xts:wrappedkey_v0,keydirectory=/metadata/vold/metadata_encryption,fileencryption=aes-256-xts:aes-256-cts:v2+inlinecrypt_optimized+wrappedkey_v0
 /storage    f2fs    /data/media/0                                   flags=display="Internal Storage";usermrf;backup=1;fsflags="bind";removable
 /metadata   ext4    /dev/block/bootdevice/by-name/metadata
 /firmware   vfat    /dev/block/bootdevice/by-name/modem             flags=slotselect;display="Firmware";mounttodecrypt;fsflags=ro
