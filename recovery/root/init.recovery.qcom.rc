@@ -30,25 +30,9 @@ on fs
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
 
-on early-fs
-    start vold
-
-service hwservicemanager /system/bin/hwservicemanager
-    user root
-    group root
-    disabled
-    onrestart setprop hwservicemanager.ready false
-    seclabel u:r:recovery:s0
-
 service boot-1-0 /system/bin/android.hardware.boot@1.0-service
     user root
     group root
-    disabled
-    seclabel u:r:recovery:s0
-
-service servicemanager /system/bin/servicemanager
-    user root
-    group root readproc
     disabled
     seclabel u:r:recovery:s0
 
@@ -58,5 +42,4 @@ on boot
     write /sys/devices/platform/soc/c440000.qcom,spmi/spmi-0/spmi0-02/c440000.qcom,spmi:qcom,pmi8998@2:qcom,qpnp-smb2/power_supply/usb/otg_switch 1
 
 on init
-    start hwservicemanager
     start boot-1-0
