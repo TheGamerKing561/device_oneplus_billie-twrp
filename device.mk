@@ -16,6 +16,8 @@
 
 LOCAL_PATH := device/oneplus/billie
 
+PRODUCT_ENFORCE_VINTF_MANIFEST := true
+
 # define hardware platform
 PRODUCT_PLATFORM := lito
 
