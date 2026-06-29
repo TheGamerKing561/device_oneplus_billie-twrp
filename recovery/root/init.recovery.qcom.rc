@@ -43,3 +43,4 @@ on boot
 
 on init
     start boot-1-0
+    setprop prepdecrypt.loglevel 2
