@@ -30,12 +30,6 @@ on fs
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
 
-    # this is for OnePlus 7 Pro 5g stock rom flashing
-    symlink /dev/block/bootdevice/by-name/mdm_oem_stanvbk /dev/block/bootdevice/by-name/mdm_oem_stanvbk_a
-    symlink /dev/block/bootdevice/by-name/mdm_oem_stanvbk /dev/block/bootdevice/by-name/mdm_oem_stanvbk_b
-    symlink /dev/block/bootdevice/by-name/spunvm /dev/block/bootdevice/by-name/spunvm_a
-    symlink /dev/block/bootdevice/by-name/spunvm /dev/block/bootdevice/by-name/spunvm_b
-
 on early-fs
     start vold
 
@@ -58,59 +52,11 @@ service servicemanager /system/bin/servicemanager
     disabled
     seclabel u:r:recovery:s0
 
-service keystore_auth /system/bin/keystore_auth
-    oneshot
-    user system
-    group root
-    disabled
-    seclabel u:r:recovery:s0
-
-# keystore is started and stopped on demand by TWRP
-service keystore /system/bin/keystore /tmp/misc/keystore
-    user root
-    group root drmrpc readproc
-    disabled
-    seclabel u:r:recovery:s0
-
-service logd /system/bin/logd
-    user root
-    group root
-    disabled
-    seclabel u:r:recovery:s0
-
-service time_daemon /system/bin/time_daemon
-    user root
-    group root
-    disabled
-    seclabel u:r:recovery:s0
-
-service patchfakepartitions-service /system/bin/patchfakepartitions-service.sh
-    user root
-    group root
-    disabled
-    oneshot
-    seclabel u:r:recovery:s0
-
-# This helps fix ld.config.txt errors from the linker on Android 8.1+
-service ldconfigtxt /system/bin/touch /sbin/ld.config.txt
-    oneshot
-    seclabel u:r:recovery:s0
-
 on boot
-	export LD_CONFIG_FILE /sbin/ld.config.txt
     setprop sys.usb.config adb
     write /proc/touchpanel/gesture_enable 1
     write /sys/devices/platform/soc/c440000.qcom,spmi/spmi-0/spmi0-02/c440000.qcom,spmi:qcom,pmi8998@2:qcom,qpnp-smb2/power_supply/usb/otg_switch 1
-    chmod 0777 /system/bin/patchfakepartitions-service.sh
-    start patchfakepartitions-service
 
 on init
-    start logd
     start hwservicemanager
     start boot-1-0
-    start time_daemon
-    setprop crypto.ready 1
-    setprop prepdecrypt.loglevel 2
-
-on property:sys.usb.config=mtp,adb
-    restart time_daemon
