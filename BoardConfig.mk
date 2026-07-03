@@ -157,10 +157,16 @@ TARGET_USES_MKE2FS := true
 # more partitions to this list for the bootloader and radio.
 AB_OTA_PARTITIONS += \
     boot \
+    dtbo \
+    odm \
+    product \
+    recovery \
     system \
-    vendor \
+    system_ext \
     vbmeta \
-    dtbo 
+    vbmeta_system \
+    vendor
+
 
 # tell update_engine to not change dynamic partition table during updates
 # needed since our qti_dynamic_partitions does not include
@@ -174,6 +180,7 @@ BOOT_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
 TW_INCLUDE_CRYPTO := true
 TW_INCLUDE_CRYPTO_FBE := true
 TW_INCLUDE_FBE_METADATA_DECRYPT := true
+TW_FORCE_KEYMASTER_VER := true
 #TW_USE_FSCRYPT_POLICY := 2
 BOARD_USES_METADATA_PARTITION := true
 BOARD_USES_QCOM_FBE_DECRYPTION := true
