@@ -36,10 +36,8 @@ AB_OTA_POSTINSTALL_CONFIG += \
 # Boot control HAL
 PRODUCT_PACKAGES += \
     android.hardware.boot@1.2-impl \
+    android.hardware.boot@1.2-impl.recovery \
     android.hardware.boot@1.2-service \
-    android.hardware.boot@1.2-impl-wrapper.recovery \
-    android.hardware.boot@1.2-impl-wrapper \
-    android.hardware.boot@1.2-impl-recovery \
     bootctrl.lito \
     bootctrl.lito.recovery \
 
@@ -51,9 +49,11 @@ PRODUCT_PACKAGES += \
 # Extra libraries that are needed for decryption
 TARGET_RECOVERY_DEVICE_MODULES += \
     libion \
+    vendor.display.config@1.0
 
 RECOVERY_LIBRARY_SOURCE_FILES += \
     $(TARGET_OUT_SHARED_LIBRARIES)/libion.so \
+    $(TARGET_OUT_SYSTEM_EXT_SHARED_LIBRARIES)/vendor.display.config@1.0.so
 
 PRODUCT_PACKAGES += \
     android.system.keystore2
