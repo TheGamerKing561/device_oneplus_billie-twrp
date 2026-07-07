@@ -46,6 +46,9 @@ PRODUCT_PACKAGES += \
     qcom_decrypt \
     qcom_decrypt_fbe
 
+PRODUCT_PACKAGES += \
+    android.hardware.keymaster@4.1.vendor
+
 # Extra libraries that are needed for decryption
 TARGET_RECOVERY_DEVICE_MODULES += \
     libion \
