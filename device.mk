@@ -34,12 +34,12 @@ AB_OTA_POSTINSTALL_CONFIG += \
     POSTINSTALL_OPTIONAL_system=true
 
 # Boot control HAL
-PRODUCT_PACKAGES += \
-    android.hardware.boot@1.2-impl-qti \
-    android.hardware.boot@1.2-impl-qti.recovery \
-    android.hardware.boot@1.2-service \
-    bootctrl.lito \
-    bootctrl.lito.recovery
+# PRODUCT_PACKAGES += \
+#    android.hardware.boot@1.2-impl-qti \
+#    android.hardware.boot@1.2-impl-qti.recovery \
+#    android.hardware.boot@1.2-service \
+#    bootctrl.lito \
+#    bootctrl.lito.recovery
 
 # qcom decryption
 PRODUCT_PACKAGES += \
